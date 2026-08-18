@@ -4,6 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Khatm</title>
+  <script>
+    (function () {
+      var saved = localStorage.getItem("khatm-theme");
+      var theme = saved || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -42,7 +49,7 @@
               <p class="greeting-name">Faizan Ahmad</p>
               <p class="streak" aria-label="14 day streak">
                 <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M13.4 2 4.8 13.2h6.1L9.2 22l10.4-12.8h-6.4L13.4 2z"/></svg>
-                <span class="streak-count">14</span>
+                <span class="streak-count" id="home-streak">14</span>
                 <span class="streak-label">day streak</span>
               </p>
             </div>
@@ -63,12 +70,12 @@
             </div>
 
             <div class="reading-side">
-              <div class="ring" role="img" aria-label="0 of 3 pages read today">
+              <div class="ring" role="img" aria-label="2 of 3 pages read today">
                 <svg viewBox="0 0 64 64" aria-hidden="true">
                   <circle class="ring-track" cx="32" cy="32" r="26" />
-                  <circle class="ring-fill" cx="32" cy="32" r="26" />
+                  <circle class="ring-fill is-two-thirds" cx="32" cy="32" r="26" />
                 </svg>
-                <span class="ring-label">0/3</span>
+                <span class="ring-label">2/3</span>
               </div>
             </div>
 
@@ -135,47 +142,52 @@
                 <span class="cell empty"></span>
                 <span class="cell empty"></span>
                 <span class="cell empty"></span>
-                <span class="cell read">1</span>
+                <button type="button" class="cell read" data-day="1">1</button>
 
-                <span class="cell off">2</span>
-                <span class="cell read">3</span>
-                <span class="cell read">4</span>
-                <span class="cell off">5</span>
-                <span class="cell off">6</span>
-                <span class="cell read">7</span>
-                <span class="cell read">8</span>
+                <button type="button" class="cell off" data-day="2">2</button>
+                <button type="button" class="cell read" data-day="3">3</button>
+                <button type="button" class="cell read" data-day="4">4</button>
+                <button type="button" class="cell off" data-day="5">5</button>
+                <button type="button" class="cell off" data-day="6">6</button>
+                <button type="button" class="cell read" data-day="7">7</button>
+                <button type="button" class="cell read" data-day="8">8</button>
 
-                <span class="cell off">9</span>
-                <span class="cell off">10</span>
-                <span class="cell off">11</span>
-                <span class="cell read">12</span>
-                <span class="cell read">13</span>
-                <span class="cell read">14</span>
-                <span class="cell off">15</span>
+                <button type="button" class="cell off" data-day="9">9</button>
+                <button type="button" class="cell off" data-day="10">10</button>
+                <button type="button" class="cell off" data-day="11">11</button>
+                <button type="button" class="cell read" data-day="12">12</button>
+                <button type="button" class="cell read" data-day="13">13</button>
+                <button type="button" class="cell read" data-day="14">14</button>
+                <button type="button" class="cell off" data-day="15">15</button>
 
-                <span class="cell off">16</span>
-                <span class="cell off">17</span>
-                <span class="cell read">18</span>
-                <span class="cell off">19</span>
-                <span class="cell off">20</span>
-                <span class="cell read">21</span>
-                <span class="cell read">22</span>
+                <button type="button" class="cell off" data-day="16">16</button>
+                <button type="button" class="cell off" data-day="17">17</button>
+                <button type="button" class="cell read" data-day="18">18</button>
+                <button type="button" class="cell off" data-day="19">19</button>
+                <button type="button" class="cell off" data-day="20">20</button>
+                <button type="button" class="cell read" data-day="21">21</button>
+                <button type="button" class="cell read" data-day="22">22</button>
 
-                <span class="cell off">23</span>
-                <span class="cell off">24</span>
-                <span class="cell read">25</span>
-                <span class="cell off">26</span>
-                <span class="cell read">27</span>
-                <span class="cell read">28</span>
-                <span class="cell off">29</span>
+                <button type="button" class="cell off" data-day="23">23</button>
+                <button type="button" class="cell off" data-day="24">24</button>
+                <button type="button" class="cell read" data-day="25">25</button>
+                <button type="button" class="cell off" data-day="26">26</button>
+                <button type="button" class="cell read" data-day="27">27</button>
+                <button type="button" class="cell read" data-day="28">28</button>
+                <button type="button" class="cell off" data-day="29">29</button>
 
-                <span class="cell off">30</span>
-                <span class="cell off">31</span>
+                <button type="button" class="cell off" data-day="30">30</button>
+                <button type="button" class="cell off" data-day="31">31</button>
                 <span class="cell empty"></span>
                 <span class="cell empty"></span>
                 <span class="cell empty"></span>
                 <span class="cell empty"></span>
                 <span class="cell empty"></span>
+              </div>
+              <div class="day-pop" id="day-pop" hidden>
+                <p class="day-pop-date" id="day-pop-date"></p>
+                <p class="day-pop-pages" id="day-pop-pages"></p>
+                <p class="day-pop-juz" id="day-pop-juz"></p>
               </div>
             </div>
           </section>
@@ -359,11 +371,11 @@
 
           <div class="stat-grid">
             <div class="stat-tile">
-              <p class="stat-value">14</p>
+              <p class="stat-value" id="stat-streak">14</p>
               <p class="stat-label">Day streak</p>
             </div>
             <div class="stat-tile">
-              <p class="stat-value">84</p>
+              <p class="stat-value" id="stat-pages">84</p>
               <p class="stat-label">Pages read</p>
             </div>
             <div class="stat-tile">
@@ -418,6 +430,14 @@
           </div>
 
           <div class="settings-group">
+            <label class="settings-row" for="theme-toggle">
+              <span>Dark mode</span>
+              <input id="theme-toggle" class="switch-input" type="checkbox" />
+              <span class="switch" aria-hidden="true"></span>
+            </label>
+          </div>
+
+          <div class="settings-group">
             <button class="settings-row" type="button">
               <span>Daily reminder</span>
               <span class="settings-value">After Fajr</span>
@@ -453,7 +473,7 @@
           </button>
           <div class="reader-head">
             <p class="reader-surah">Al-Baqarah</p>
-            <p class="reader-page">Page 22 of 604</p>
+            <p class="reader-page" id="reader-page-label">Page 22 of 604</p>
           </div>
           <span class="icon-btn" aria-hidden="true"></span>
         </header>
@@ -465,38 +485,142 @@
           <p class="ayah" lang="ar" dir="rtl">وَٱلَّذِينَ يُؤْمِنُونَ بِمَآ أُنزِلَ إِلَيْكَ وَمَآ أُنزِلَ مِن قَبْلِكَ وَبِٱلْـَٔاخِرَةِ هُمْ يُوقِنُونَ <span class="ayah-num">٤</span></p>
         </div>
         <div class="reader-bar">
-          <button type="button">Previous</button>
-          <span>1 / 3 today</span>
-          <button type="button">Next page</button>
+          <button type="button" id="reader-prev">Previous</button>
+          <span id="reader-position">Page 1</span>
+          <button type="button" id="reader-next">Next page</button>
+        </div>
+      </section>
+
+      <section class="screen screen-overlay" id="screen-complete" hidden>
+        <div class="complete-screen">
+          <div id="check-lottie" class="check-lottie" aria-hidden="true"></div>
+          <p class="complete-kicker">Alhamdulillah</p>
+          <h2 class="complete-title">Reading complete</h2>
+          <p class="complete-streak" id="complete-streak">
+            <svg class="streak-bolt" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M13.4 2 4.8 13.2h6.1L9.2 22l10.4-12.8h-6.4L13.4 2z"/></svg>
+            <span class="streak-ticker" aria-hidden="true">
+              <span class="streak-from" id="streak-from">14</span>
+              <span class="streak-to" id="streak-to">15</span>
+            </span>
+            <span class="streak-words">day streak</span>
+          </p>
+          <ul class="complete-summary">
+            <li>
+              <span class="complete-label">Surah</span>
+              <span class="complete-value">Al-Baqarah</span>
+            </li>
+            <li>
+              <span class="complete-label">Juz</span>
+              <span class="complete-value">Juz 2</span>
+            </li>
+            <li>
+              <span class="complete-label">Pages</span>
+              <span class="complete-value">3 · 22 – 24</span>
+            </li>
+            <li>
+              <span class="complete-label">Ayahs</span>
+              <span class="complete-value">16 · 2:142 – 2:157</span>
+            </li>
+          </ul>
+          <button class="complete-done" type="button" id="complete-done">Done</button>
         </div>
       </section>
 
       <nav class="tabbar" aria-label="Main">
         <button class="tab is-active" type="button" data-tab="home">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1z"/></svg>
-          <span>Home</span>
+          <span class="tab-inner">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1z"/></svg>
+            <span>Home</span>
+          </span>
         </button>
         <button class="tab" type="button" data-tab="quran">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v15H6.5A2.5 2.5 0 0 0 4 19.5z"/></svg>
-          <span>Quran</span>
+          <span class="tab-inner">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v15H6.5A2.5 2.5 0 0 0 4 19.5z"/></svg>
+            <span>Quran</span>
+          </span>
         </button>
         <button class="tab" type="button" data-tab="progress">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16M7 16V9M12 16V5M17 16v-4"/></svg>
-          <span>Progress</span>
+          <span class="tab-inner">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16M7 16V9M12 16V5M17 16v-4"/></svg>
+            <span>Progress</span>
+          </span>
         </button>
         <button class="tab" type="button" data-tab="settings">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/></svg>
-          <span>Settings</span>
+          <span class="tab-inner">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/></svg>
+            <span>Settings</span>
+          </span>
         </button>
       </nav>
 
       <aside class="drawer" id="drawer" hidden>
         <div class="drawer-panel">
-          <p class="drawer-kicker">Khatm App</p>
-          <p class="drawer-name">Faizan</p>
-          <button class="drawer-link" type="button">Reading plan</button>
-          <button class="drawer-link" type="button">Bookmarks</button>
-          <button class="drawer-link" type="button">Help</button>
+          <div class="drawer-profile">
+            <div class="drawer-avatar" aria-hidden="true">FA</div>
+            <p class="drawer-name">Faizan Ahmad</p>
+            <p class="drawer-email">faizan@khatm.app</p>
+          </div>
+
+          <div class="theme-picker">
+            <p class="theme-picker-label" id="theme-picker-label">Theme</p>
+            <div class="theme-seg" id="theme-seg" role="radiogroup" aria-labelledby="theme-picker-label">
+              <span class="theme-seg-thumb" aria-hidden="true"></span>
+              <button class="theme-seg-btn is-active" type="button" data-theme-set="light" role="radio" aria-checked="true">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="4"/>
+                  <path d="M12 3v1.6M12 19.4V21M4.9 4.9l1.1 1.1M18 18l1.1 1.1M3 12h1.6M19.4 12H21M4.9 19.1 6 18M18 6l1.1-1.1"/>
+                </svg>
+                Light
+              </button>
+              <button class="theme-seg-btn" type="button" data-theme-set="dark" role="radio" aria-checked="false">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M12 3a6.4 6.4 0 0 0 9 9 9 9 0 1 1-9-9z"/>
+                </svg>
+                Dark
+              </button>
+            </div>
+          </div>
+
+          <nav class="drawer-nav" aria-label="Account">
+            <button class="drawer-item" type="button" data-go="progress">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="9"/>
+                <circle cx="12" cy="12" r="5"/>
+                <circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/>
+              </svg>
+              <span>My Khatm Goals</span>
+              <span class="drawer-badge">38%</span>
+            </button>
+            <button class="drawer-item" type="button" data-go="progress">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M12 7v5l3 2"/>
+              </svg>
+              <span>Reading History</span>
+            </button>
+            <button class="drawer-item" type="button" data-go="quran">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 4.5h8.2a2.3 2.3 0 0 1 2.3 2.3V20l-6.4-2.6L5 20V6.8A2.3 2.3 0 0 1 7.3 4.5H7z"/>
+              </svg>
+              <span>Bookmarks</span>
+            </button>
+            <button class="drawer-item" type="button" data-go="settings">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M6 9a6 6 0 1 1 12 0c0 7 3 7 3 9H3c0-2 3-2 3-9"/>
+                <path d="M10 20a2 2 0 0 0 4 0"/>
+              </svg>
+              <span>Reminders</span>
+            </button>
+            <button class="drawer-item" type="button" data-go="settings">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+              </svg>
+              <span>Settings</span>
+            </button>
+          </nav>
+
+          <button class="drawer-signout" type="button" id="drawer-signout">Sign out</button>
         </div>
       </aside>
 
@@ -512,6 +636,7 @@
     </div>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
