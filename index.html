@@ -347,65 +347,48 @@
 
       <!-- PROGRESS -->
       <section class="screen" id="screen-progress" data-screen="progress" hidden>
-        <header class="top-bar">
-          <div class="top-bar-start">
+        <div class="progress-float">
+          <header class="progress-top">
             <button class="icon-btn" type="button" data-open="menu" aria-label="Open menu">
               <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
             </button>
-            <h1 class="app-title">Progress</h1>
-          </div>
-          <span class="icon-btn" aria-hidden="true"></span>
-        </header>
-        <div class="scroll">
-          <div class="progress-hero">
-            <div class="ring ring-lg" role="img" aria-label="38 percent complete">
-              <svg viewBox="0 0 64 64" aria-hidden="true">
-                <circle class="ring-track" cx="32" cy="32" r="26" />
-                <circle class="ring-fill is-partial" cx="32" cy="32" r="26" />
-              </svg>
-              <span class="ring-label">38%</span>
+            <div class="progress-pills" aria-label="Reading stats">
+              <span class="progress-pill">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M13.4 2 4.8 13.2h6.1L9.2 22l10.4-12.8h-6.4L13.4 2z"/></svg>
+                <span id="stat-streak">14</span>
+              </span>
+              <span class="progress-pill">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                <span>38%</span>
+              </span>
             </div>
-            <p class="progress-hero-title">Khatm Progress</p>
-            <p class="progress-hero-sub">230 of 604 pages · 38 days left</p>
-          </div>
+            <span class="icon-btn" aria-hidden="true"></span>
+          </header>
 
-          <div class="stat-grid">
-            <div class="stat-tile">
-              <p class="stat-value" id="stat-streak">14</p>
-              <p class="stat-label">Day streak</p>
+          <div class="path-overview">
+            <h2 class="path-overview-title">Khatm Path</h2>
+            <div class="path-overview-row">
+              <span class="path-overview-label">Your current khatm</span>
+              <span class="path-overview-pct">38%</span>
             </div>
-            <div class="stat-tile">
-              <p class="stat-value" id="stat-pages">84</p>
-              <p class="stat-label">Pages read</p>
+            <div class="goal-bar path-overview-bar" aria-hidden="true">
+              <span class="goal-bar-fill" style="width: 38%"></span>
             </div>
-            <div class="stat-tile">
-              <p class="stat-value">18</p>
-              <p class="stat-label">Days this month</p>
+            <p class="pace-badge is-behind">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>
+              3 days behind
+            </p>
+            <p class="path-overview-sub">230 of 604 pages · 38 days left</p>
+          </div>
+        </div>
+
+        <div class="scroll scroll-path">
+          <div class="learning-path" id="learning-path" aria-label="Khatm learning path">
+            <div class="path-track" id="path-track">
+              <svg class="path-lines" id="path-lines" preserveAspectRatio="none" aria-hidden="true"></svg>
+              <div id="path-steps"></div>
             </div>
           </div>
-
-          <section class="history">
-            <div class="section-head">
-              <h3>Recent sessions</h3>
-            </div>
-            <ul class="history-list">
-              <li>
-                <span class="history-day">Yesterday</span>
-                <span class="history-copy">Al-Baqarah · Pages 19 – 21</span>
-                <span class="history-done">3 pages</span>
-              </li>
-              <li>
-                <span class="history-day">Mon 22</span>
-                <span class="history-copy">Al-Baqarah · Pages 16 – 18</span>
-                <span class="history-done">3 pages</span>
-              </li>
-              <li>
-                <span class="history-day">Sun 21</span>
-                <span class="history-copy">Al-Baqarah · Pages 13 – 15</span>
-                <span class="history-done">3 pages</span>
-              </li>
-            </ul>
-          </section>
         </div>
       </section>
 

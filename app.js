@@ -334,3 +334,114 @@ document.querySelectorAll(".activity-grid .cell[data-day]").forEach((cell) => {
 document.addEventListener("click", (event) => {
   if (!event.target.closest(".activity-card")) hideDayPop();
 });
+
+const TOTAL_JUZ = 30;
+const KHATM_PROGRESS = 0.38;
+const COMPLETED_JUZ = Math.floor(KHATM_PROGRESS * TOTAL_JUZ);
+const ACTIVE_JUZ = COMPLETED_JUZ + 1;
+const PATH_ALIGNS = ["right", "left", "center"];
+const PATH_X = { right: 255, left: 95, center: 175 };
+const PATH_STEP_H = 88;
+const PATH_SVG_W = 350;
+
+const ICON_CHECK = '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7.5"/></svg>';
+const ICON_STAR = '<svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor" aria-hidden="true"><path d="M12 2.2 9.4 8.8 2.5 9.6l5.2 4.5-1.6 6.8L12 17.8l6 3.1-1.6-6.8 5.2-4.5-6.9-.8L12 2.2z"/></svg>';
+const ICON_LOCK = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+
+function pathAlign(index) {
+  return PATH_ALIGNS[index % PATH_ALIGNS.length];
+}
+
+function pathStyle(visualIndex) {
+  const align = pathAlign(visualIndex);
+  const x = (PATH_X[align] / PATH_SVG_W) * 100;
+  const y = (visualIndex + 0.5) * PATH_STEP_H;
+  return `--path-x:${x}%;--path-y:${y}px`;
+}
+
+function pathPoint(index) {
+  const align = pathAlign(index);
+  return {
+    x: PATH_X[align],
+    y: (index + 0.5) * PATH_STEP_H,
+  };
+}
+
+function buildPathD(points) {
+  if (points.length < 2) return "";
+  let d = `M ${points[0].x} ${points[0].y}`;
+  for (let i = 1; i < points.length; i += 1) {
+    const prev = points[i - 1];
+    const curr = points[i];
+    const midY = (prev.y + curr.y) / 2;
+    d += ` C ${prev.x} ${midY}, ${curr.x} ${midY}, ${curr.x} ${curr.y}`;
+  }
+  return d;
+}
+
+function juzNodeHtml(juz, visualIndex) {
+  const label = `Juz ${juz}`;
+  const style = pathStyle(visualIndex);
+
+  if (juz <= COMPLETED_JUZ) {
+    return `
+      <div class="path-step" style="${style}">
+        <div class="path-node is-done">
+          <button class="path-node-btn" type="button" aria-label="${label} completed">${ICON_CHECK}</button>
+          <span class="path-node-label">${label}</span>
+        </div>
+      </div>`;
+  }
+
+  if (juz === ACTIVE_JUZ) {
+    return `
+      <div class="path-step" style="${style}" id="path-active-step">
+        <div class="path-node is-active">
+          <div class="path-start-pop" aria-hidden="true">START</div>
+          <div class="path-active-wrap">
+            <svg class="path-active-ring" viewBox="0 0 88 88" aria-hidden="true">
+              <circle class="path-ring-track" cx="44" cy="44" r="38" />
+              <circle class="path-ring-glow" cx="44" cy="44" r="38" />
+            </svg>
+            <button class="path-node-btn" type="button" id="path-start-btn" aria-label="Start ${label} reading">${ICON_STAR}</button>
+          </div>
+          <span class="path-node-label is-active">${label}</span>
+        </div>
+      </div>`;
+  }
+
+  return `
+    <div class="path-step" style="${style}">
+      <div class="path-node is-locked">
+        <div class="path-node-btn" aria-hidden="true">${ICON_LOCK}</div>
+        <span class="path-node-label">${label}</span>
+      </div>
+    </div>`;
+}
+
+function renderLearningPath() {
+  const stepsEl = document.getElementById("path-steps");
+  const linesEl = document.getElementById("path-lines");
+  const trackEl = document.getElementById("path-track");
+  if (!stepsEl || !linesEl || !trackEl) return;
+
+  const trackH = TOTAL_JUZ * PATH_STEP_H;
+  trackEl.style.height = `${trackH}px`;
+
+  const points = Array.from({ length: TOTAL_JUZ }, (_, i) => pathPoint(i));
+
+  linesEl.setAttribute("viewBox", `0 0 ${PATH_SVG_W} ${trackH}`);
+  linesEl.innerHTML = `<path d="${buildPathD(points)}" />`;
+
+  stepsEl.innerHTML = Array.from({ length: TOTAL_JUZ }, (_, i) => {
+    const juz = TOTAL_JUZ - i;
+    return juzNodeHtml(juz, i);
+  }).join("");
+
+  const startBtn = document.getElementById("path-start-btn");
+  if (startBtn) {
+    startBtn.addEventListener("click", openReader);
+  }
+}
+
+renderLearningPath();
