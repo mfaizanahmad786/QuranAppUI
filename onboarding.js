@@ -1,7 +1,46 @@
+/* ── Auth screen ── */
+const authScreen = document.getElementById("auth-screen");
+const authTabs = document.querySelectorAll(".auth-tab");
+const authLoginForm = document.getElementById("auth-login-form");
+const authSignupForm = document.getElementById("auth-signup-form");
+const onboardMain = document.getElementById("onboard-main");
+const onboardStatusBar = document.getElementById("onboard-status-bar");
+
+function switchAuthTab(mode) {
+  authTabs.forEach((t) => t.classList.toggle("is-active", t.dataset.tab === mode));
+  authLoginForm.classList.toggle("is-active", mode === "login");
+  authSignupForm.classList.toggle("is-active", mode === "signup");
+}
+
+authTabs.forEach((tab) => {
+  tab.addEventListener("click", () => switchAuthTab(tab.dataset.tab));
+});
+
+function enterOnboarding() {
+  authScreen.classList.add("is-hidden");
+  onboardMain.style.display = "";
+  onboardStatusBar.style.display = "";
+  showStep(0, "forward");
+}
+
+document.getElementById("auth-login-submit").addEventListener("click", enterOnboarding);
+document.getElementById("auth-signup-submit").addEventListener("click", enterOnboarding);
+document.getElementById("google-auth").addEventListener("click", enterOnboarding);
+document.getElementById("apple-auth").addEventListener("click", enterOnboarding);
+
+document.querySelectorAll(".password-toggle").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const field = btn.previousElementSibling;
+    if (!field) return;
+    const isPassword = field.type === "password";
+    field.type = isPassword ? "text" : "password";
+    btn.setAttribute("aria-label", isPassword ? "Hide password" : "Show password");
+  });
+});
+
+/* ── Onboarding flow (Name → Goal → Reminder → Summary) ── */
 const steps = document.querySelectorAll(".onboard-step");
 const dots = document.querySelectorAll(".onboard-dot");
-const phone = document.querySelector(".phone");
-const onboard = document.querySelector(".onboard");
 const dotsWrap = document.querySelector(".onboard-dots");
 const backBtn = document.getElementById("onboard-back");
 const skipBtn = document.getElementById("onboard-skip");
@@ -29,9 +68,7 @@ function formatGoalLabel(days) {
 }
 
 function updateDots(index) {
-  dots.forEach((dot, i) => {
-    dot.classList.toggle("is-active", i === index);
-  });
+  dots.forEach((dot, i) => dot.classList.toggle("is-active", i === index));
 }
 
 function updateNextLabel(index) {
@@ -39,7 +76,7 @@ function updateNextLabel(index) {
     nextBtn.textContent = "Start Khatm";
     return;
   }
-  nextBtn.textContent = index === 0 ? "Get started" : "Continue";
+  nextBtn.textContent = "Continue";
 }
 
 function customDays() {
@@ -48,8 +85,8 @@ function customDays() {
 }
 
 function canContinue(index) {
-  if (index === 1) return nameInput.value.trim().length > 0;
-  if (index === 2 && customGoal.classList.contains("is-selected")) {
+  if (index === 0) return nameInput.value.trim().length > 0;
+  if (index === 1 && customGoal.classList.contains("is-selected")) {
     return customDays() !== null;
   }
   return true;
@@ -76,9 +113,7 @@ function showStep(index, direction) {
 
   current = index;
   backBtn.classList.toggle("is-visible", index > 0);
-  phone?.classList.toggle("is-welcome", index === 0);
-  onboard?.classList.toggle("is-welcome", index === 0);
-  if (dotsWrap) dotsWrap.hidden = index === 0;
+  skipBtn.style.visibility = index >= 1 ? "visible" : "hidden";
   updateDots(index);
   updateNextLabel(index);
   if (index === TOTAL - 1) updateSummary();
@@ -155,5 +190,3 @@ nameInput.addEventListener("input", () => {
 nextBtn.addEventListener("click", goNext);
 backBtn.addEventListener("click", goBack);
 skipBtn.addEventListener("click", finishOnboarding);
-
-showStep(0);

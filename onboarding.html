@@ -19,16 +19,91 @@
 <body>
   <div class="device">
     <div class="phone">
-      <div class="welcome-deco" aria-hidden="true">
-        <span></span>
-        <span></span>
+      <!-- ── Auth screen ── -->
+      <div class="auth-screen" id="auth-screen">
+        <!-- Dark header -->
+        <div class="auth-header">
+          <div class="status-bar auth-status-bar">
+            <span class="status-time">9:41</span>
+            <span aria-hidden="true"> </span>
+          </div>
+          <div class="auth-header-text">
+            <p class="auth-header-brand">Khatm</p>
+            <h1 class="auth-header-title">Get started now</h1>
+            <p class="auth-header-copy">Create an account or log in to begin your Quran journey</p>
+          </div>
+        </div>
+
+        <!-- White card with tab toggle -->
+        <div class="auth-card">
+          <!-- Tab toggle -->
+          <div class="auth-tabs">
+            <button class="auth-tab is-active" type="button" data-tab="login">Log In</button>
+            <button class="auth-tab" type="button" data-tab="signup">Sign Up</button>
+          </div>
+
+          <!-- Login form -->
+          <div class="auth-form is-active" id="auth-login-form">
+            <label class="onboard-label" for="login-email">Email</label>
+            <input class="onboard-input" id="login-email" type="email" placeholder="you@example.com" autocomplete="email" />
+
+            <label class="onboard-label" for="login-password">Password</label>
+            <div class="password-field">
+              <input class="onboard-input" id="login-password" type="password" placeholder="Your password" autocomplete="current-password" />
+              <button class="password-toggle" type="button" aria-label="Show password">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+
+            <div class="auth-meta-row">
+              <label class="auth-remember"><input type="checkbox" /> Remember me</label>
+              <button class="auth-forgot" type="button">Forgot Password?</button>
+            </div>
+
+            <button class="auth-submit" type="button" id="auth-login-submit">Log In</button>
+          </div>
+
+          <!-- Signup form -->
+          <div class="auth-form" id="auth-signup-form">
+            <label class="onboard-label" for="signup-name">Full name</label>
+            <input class="onboard-input" id="signup-name" type="text" placeholder="Faizan Ahmad" autocomplete="name" />
+
+            <label class="onboard-label" for="signup-email">Email</label>
+            <input class="onboard-input" id="signup-email" type="email" placeholder="you@example.com" autocomplete="email" />
+
+            <label class="onboard-label" for="signup-password">Password</label>
+            <div class="password-field">
+              <input class="onboard-input" id="signup-password" type="password" placeholder="Create a password" autocomplete="new-password" />
+              <button class="password-toggle" type="button" aria-label="Show password">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+
+            <button class="auth-submit" type="button" id="auth-signup-submit">Sign Up</button>
+          </div>
+
+          <!-- Shared social buttons -->
+          <div class="auth-divider"><span>Or</span></div>
+
+          <button class="auth-social" type="button" id="google-auth">
+            <svg viewBox="0 0 24 24" width="20" height="20"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09a6.97 6.97 0 0 1 0-4.17V7.07H2.18a11.01 11.01 0 0 0 0 9.86l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+            Continue with Google
+          </button>
+
+          <button class="auth-social" type="button" id="apple-auth">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.52-3.23 0-1.44.65-2.2.46-3.06-.4C3.79 16.17 4.36 9.53 8.9 9.28c1.26.07 2.13.72 2.91.77.99-.2 1.95-.78 3.01-.7 1.27.1 2.23.6 2.86 1.5-2.63 1.57-2 5.01.53 5.97-.63 1.64-1.44 3.24-3.15 4.46zM12.03 9.22c-.15-2.34 1.78-4.3 3.97-4.5.3 2.62-2.38 4.6-3.97 4.5z"/></svg>
+            Continue with Apple
+          </button>
+        </div>
       </div>
-      <div class="status-bar">
+
+      <!-- ── Onboarding flow ── -->
+      <div class="status-bar onboard-status-bar" id="onboard-status-bar" style="display:none;">
         <span class="status-time">9:41</span>
         <span aria-hidden="true"> </span>
       </div>
 
-      <div class="onboard">
+      <div class="onboard" id="onboard-main" style="display:none;">
         <div class="onboard-top">
           <button class="onboard-back" type="button" id="onboard-back" aria-label="Back">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg>
@@ -41,23 +116,11 @@
           <span class="onboard-dot"></span>
           <span class="onboard-dot"></span>
           <span class="onboard-dot"></span>
-          <span class="onboard-dot"></span>
         </div>
 
         <div class="onboard-steps">
-          <!-- 1 · Welcome -->
-          <section class="onboard-step onboard-welcome is-active" data-step="0">
-            <div class="welcome-splash">
-              <div class="welcome-art-card">
-                <img class="welcome-art-img" src="assets/quran-rehal.png" alt="" width="240" height="240" />
-              </div>
-              <h1 class="welcome-title">Khatm</h1>
-              <p class="welcome-copy">Complete the Quran at your pace,<br />with daily readings and a guided juz path.</p>
-            </div>
-          </section>
-
-          <!-- 2 · Name -->
-          <section class="onboard-step" data-step="1">
+          <!-- 1 · Name -->
+          <section class="onboard-step is-active" data-step="0">
             <div class="onboard-form">
               <h2 class="onboard-title" style="font-size: 24px; margin-bottom: 8px;">What should we call you?</h2>
               <p class="onboard-copy" style="max-width: none; margin-bottom: 20px;">We’ll greet you on the home screen each day.</p>
@@ -66,8 +129,8 @@
             </div>
           </section>
 
-          <!-- 3 · Khatm goal -->
-          <section class="onboard-step" data-step="2">
+          <!-- 2 · Khatm goal -->
+          <section class="onboard-step" data-step="1">
             <div class="onboard-form">
               <h2 class="onboard-title" style="font-size: 24px; margin-bottom: 8px;">Choose your khatm goal</h2>
               <p class="onboard-copy" style="max-width: none; margin-bottom: 20px;">How long would you like to finish the Quran?</p>
@@ -119,8 +182,8 @@
             </div>
           </section>
 
-          <!-- 4 · Reminder -->
-          <section class="onboard-step" data-step="3">
+          <!-- 3 · Reminder -->
+          <section class="onboard-step" data-step="2">
             <div class="onboard-form">
               <h2 class="onboard-title" style="font-size: 24px; margin-bottom: 8px;">Daily reminder</h2>
               <p class="onboard-copy" style="max-width: none; margin-bottom: 20px;">When should we nudge you to read?</p>
@@ -156,8 +219,8 @@
             </div>
           </section>
 
-          <!-- 5 · Summary -->
-          <section class="onboard-step" data-step="4">
+          <!-- 4 · Summary -->
+          <section class="onboard-step" data-step="3">
             <div class="onboard-form">
               <h2 class="onboard-title" style="font-size: 24px; margin-bottom: 8px;">You’re all set</h2>
               <p class="onboard-copy" style="max-width: none; margin-bottom: 20px;">Here’s your khatm plan. You can change this anytime in Settings.</p>
