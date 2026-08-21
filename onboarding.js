@@ -121,7 +121,7 @@ function showStep(index, direction) {
 }
 
 function finishOnboarding() {
-  window.location.href = "index.html";
+  window.location.href = "home.html";
 }
 
 function goNext() {

@@ -1,0 +1,190 @@
+:root {
+  --bg: #F6F1E8;
+  --forest-dark: #1A2A1A;
+  --green: #4A7C4A;
+  --muted-forest: #5C735C;
+  --device-bg: #101810;
+  --bezel: #1A2A1A;
+  --reading-grad: linear-gradient(135deg, #5B8F5C 0%, #3E6B40 58%, #2D4A2D 100%);
+  color-scheme: light;
+  font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+[data-theme="dark"] {
+  --bg: #121912;
+  --forest-dark: #F0EBE2;
+  --green: #5E9A5A;
+  --muted-forest: #A8B8A4;
+  --device-bg: #070A07;
+  --bezel: #0A100A;
+  --reading-grad: linear-gradient(135deg, #3F6B40 0%, #2C4A2D 58%, #1A2A1A 100%);
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  background: var(--device-bg);
+  color: var(--forest-dark);
+  -webkit-font-smoothing: antialiased;
+}
+
+.device {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+}
+
+.phone {
+  position: relative;
+  width: 390px;
+  height: 844px;
+  max-height: calc(100vh - 48px);
+  background: var(--bg);
+  border-radius: 44px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 12px var(--bezel),
+    0 30px 80px rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-direction: column;
+}
+
+.splash-phone {
+  background: var(--green);
+}
+
+.splash {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  padding: 32px;
+}
+
+.splash-glow {
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.18) 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -58%);
+  pointer-events: none;
+}
+
+.splash-mark {
+  width: 120px;
+  height: 120px;
+  border-radius: 32px;
+  display: grid;
+  place-items: center;
+  background: rgba(255,255,255,0.12);
+  margin-bottom: 28px;
+  animation: splash-pop 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.splash-mark img {
+  width: 88px;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.splash-title {
+  font-size: 44px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: #fff;
+  margin-bottom: 10px;
+  animation: splash-fade-up 0.6s ease 0.15s both;
+}
+
+.splash-tagline {
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.7);
+  animation: splash-fade-up 0.6s ease 0.28s both;
+}
+
+.splash-loader {
+  position: absolute;
+  bottom: 56px;
+  width: 36px;
+  height: 36px;
+  animation: splash-fade-up 0.5s ease 0.45s both;
+}
+
+.splash-loader span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 3px solid rgba(255,255,255,0.25);
+  border-top-color: #fff;
+  animation: splash-spin 0.8s linear infinite;
+}
+
+@keyframes splash-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes splash-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes splash-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 430px) {
+  body {
+    background: var(--green);
+  }
+
+  .device {
+    padding: 0;
+    min-height: 100dvh;
+  }
+
+  .phone {
+    width: 100%;
+    height: 100dvh;
+    max-height: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
